@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>Karishma – 28 🎂</title>
+    <meta name="description" content="Privat bursdagsopplevelse for Karishma." />
+    <style>
+        /* ====== Base / Layout ====== */
+        :root {
+            --bg1: #fafafa;
+            --bg2: #f0f0f3;
+            --card: #ffffff;
+            --text: #0b0b0d;
+            --muted: #6b7280;
+            --ring: #e5e7eb;
+            --accent: #0b0b0d;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .07);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            color: var(--text);
+            background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+        }
+
+        .wrap {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .card {
+            position: relative;
+            width: min(720px, 100%);
+            background: var(--card);
+            border: 1px solid var(--ring);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .glow {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            opacity: .03;
+            background: radial-gradient(1200px 400px at -10% -10%, #000, transparent);
+        }
+
+        .p {
+            padding: 20px;
+        }
+
+        @media (min-width:640px) {
+            .p {
+                padding: 32px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(20px, 3.5vw, 28px);
+            margin: 0;
+            font-weight: 650;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        /* ====== Buttons / Controls ====== */
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            background: #000;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-weight: 600;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
+            transition: transform .08s ease, opacity .2s ease;
+        }
+
+        .btn:active {
+            transform: scale(.98);
+        }
+
+        .btn[disabled] {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tgl-track {
+            width: 48px;
+            height: 28px;
+            background: #d4d4d8;
+            border-radius: 1000px;
+            padding: 3px;
+            transition: background .2s;
+            display: inline-block;
+        }
+
+        .tgl-thumb {
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 999px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+            transform: translateX(0);
+            transition: transform .2s;
+            display: inline-block;
+        }
+
+        .toggle[data-on="true"] .tgl-track {
+            background: #000;
+        }
+
+        .toggle[data-on="true"] .tgl-thumb {
+            transform: translateX(20px);
+        }
+
+        .tgl-label {
+            font-size: 14px;
+            color: #374151;
+            display: inline-flex;
+            gap: .4rem;
+            align-items: center;
+        }
+
+        /* ====== Scenes ====== */
+        .scene {
+            display: none;
+        }
+
+        .scene.active {
+            display: block;
+        }
+
+        /* ====== Countdown Ring ====== */
+        .ring {
+            position: relative;
+            width: 160px;
+            height: 160px;
+        }
+
+        .ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-label {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .ring-small {
+            font-size: 13px;
+            opacity: .7;
+        }
+
+        .ring-big {
+            font-size: 44px;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        /* ====== Cake + Candles ====== */
+        .cake-wrap {
+            display: grid;
+            place-items: center;
+            gap: 16px;
+        }
+
+        .candles {
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            top: 54px;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 40px;
+        }
+
+        .candle-holder {
+            position: absolute;
+        }
+
+        .candle {
+            position: relative;
+            width: 6px;
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .wick {
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 12px;
+            background: #27272a;
+            border-radius: 2px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: radial-gradient(closest-side, rgba(255, 220, 140, .95), rgba(255, 150, 0, .85) 60%, rgba(255, 140, 0, 0) 70%);
+            filter: drop-shadow(0 0 6px rgba(255, 160, 40, .9));
+            animation: flicker 1.2s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-2px) scale(1.05);
+                opacity: .98;
+            }
+        }
+
+        .smoke {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            background: linear-gradient(to top, rgba(107, 114, 128, .4), rgba(107, 114, 128, 0));
+            opacity: 0;
+            animation: puff 1.6s ease-out forwards;
+        }
+
+        @keyframes puff {
+            0% {
+                transform: translateX(-50%) translateY(0) scale(.6);
+                opacity: 0;
+            }
+
+            40% {
+                opacity: .6;
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(-22px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ====== Video ====== */
+        .video-box {
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* ====== Finale image ====== */
+        .avatar {
+            width: 224px;
+            height: 224px;
+            border-radius: 24px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+        }
+
+        /* ====== Motion preferences ====== */
+        @media (prefers-reduced-motion: reduce) {
+
+            .flame,
+            .smoke {
+                animation: none !important;
+            }
+
+            .btn {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="card">
+            <div class="glow"></div>
+            <div class="p">
+                <!-- Header -->
+                <div class="row">
+                    <h1>Karishma – 28 🎂</h1>
+                    <div class="toggle" id="micToggle" data-on="false" role="switch" aria-checked="false" tabindex="0"
+                        title="Blås med mikrofon">
+                        <span class="tgl-label">
+                            <span id="micIcon" aria-hidden="true">🎤</span>
+                            Blås med mikrofon
+                        </span>
+                        <span class="tgl-track"><span class="tgl-thumb"></span></span>
+                    </div>
+                </div>
+
+                <!-- START SCENE -->
+                <section class="scene active center" id="scene-start" aria-labelledby="start-title">
+                    <p id="start-title" class="muted" style="max-width:56ch;margin:0 auto 20px;">
+                        En liten, privat feiring bare for deg. Only good vibes, sjokoladekake og litt
+                        magi ✨
+                    </p>
+                    <button class="btn" id="btn-start">✨ Start</button>
+                    <div class="muted" style="margin-top:10px;font-size:12px;">Valgfritt: Aktiver mikrofon for å blåse
+                        ut lysene.</div>
+                </section>
+
+                <!-- CAKE SCENE -->
+                <section class="scene" id="scene-cake" aria-live="polite">
+                    <div class="cake-wrap">
+                        <!-- Pretty cake SVG -->
+                        <div style="position:relative;">
+                            <svg viewBox="0 0 400 260" style="width:min(640px,90vw);max-width:600px;display:block;">
+                                <!-- Plate -->
+                                <ellipse cx="200" cy="242" rx="160" ry="12" fill="#d4d4d8"></ellipse>
+                                <!-- Cake body -->
+                                <rect x="60" y="80" width="280" height="140" rx="24" fill="#4a2c2a"></rect>
+                                <!-- Icing drip -->
+                                <path d="M60 100 Q120 130 160 100 Q200 130 240 100 Q280 130 340 100 L340 120 L60 120 Z"
+                                    fill="#6b3a37"></path>
+                                <!-- Top icing -->
+                                <rect x="60" y="68" width="280" height="40" rx="20" fill="#5b332f"></rect>
+                                <!-- Top ellipse -->
+                                <ellipse cx="200" cy="68" rx="140" ry="22" fill="#3d2220"></ellipse>
+                                <!-- Text -->
+                                <text x="200" y="152" text-anchor="middle" font-family="ui-sans-serif, system-ui"
+                                    font-size="28" fill="#f5f5f5" style="font-weight:700">Paglu 28</text>
+                            </svg>
+
+                            <!-- Candles layer -->
+                            <div class="candles" id="candles"></div>
+                        </div>
+
+                        <!-- Countdown / info -->
+                        <div id="countdownWrap" style="display:flex; align-items:center; gap:22px;">
+                            <div class="ring" aria-live="polite">
+                                <svg viewBox="0 0 180 180">
+                                    <circle cx="90" cy="90" r="64" stroke="currentColor" stroke-opacity=".15"
+                                        stroke-width="10" fill="none"></circle>
+                                    <circle id="ring-progress" cx="90" cy="90" r="64" stroke="currentColor"
+                                        stroke-width="10" stroke-linecap="round" fill="none"
+                                        stroke-dasharray="402.12 402.12" stroke-dashoffset="0"></circle>
+                                </svg>
+                                <div class="ring-label">
+                                    <div>
+                                        <div class="ring-small">Blås om</div>
+                                        <div class="ring-big" id="countNum">5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="muted" style="max-width:22ch" id="countHelp">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIDEO SCENE -->
+                <section class="scene" id="scene-video">
+                    <div class="video-box">
+                        <video id="vid" controls playsinline>
+                            <source src="/video.MOV" type="video/mp4" />
+                            Nettleseren din støtter ikke videospilleren.
+                        </video>
+                    </div>
+                    <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+                        <button class="btn" id="btn-play">▶ Spill av</button>
+                        <button class="btn" id="btn-replay">↺ Spill på nytt</button>
+                        <button class="btn" id="btn-next">Neste</button>
+                    </div>
+                </section>
+
+                <!-- FINALE SCENE -->
+                <section class="scene center" id="scene-final">
+                    <div style="margin:10px 0 6px;">
+                        <h2 style="font-size:clamp(24px,5vw,32px); margin:0; font-weight:800;">
+                            Gratulerer, Karishma!
+                        </h2>
+                        <p class="muted" style="max-width:56ch;margin:10px auto 0;">
+                            Jeg ville avslutte med noen ord etter videoen, fordi du fortjener å høre det.
+
+                            Jeg håper denne gaven og denne lille siden gjorde dagen din 1% bedre. Da er jeg fornøyd.
+
+                            Uansett hva fremtiden bringer, så ønsker jeg bare det beste for deg.
+
+                            Jeg håper dette året gir deg alt du drømmer om og enda mer.
+
+                            Kos deg masse på bursdagen din, Karishma.
+                            Du fortjener å bli feiret på den beste måten. 🌸
+
+                            Stooooor klem
+                            – Piyush ❤️
+                        </p>
+                    </div>
+                    <img src="/karishma.jpg" alt="Karishma smiler – bursdagsbilde" class="avatar"
+                        onerror="this.style.display='none';" />
+                    <div class="muted" style="font-size:12px; margin-top:8px;"></div>
+                </section>
+            </div>
+            <div style="height:16px;"></div>
+        </div>
+    </div>
+
+    <!-- Optional confetti via CDN (loaded lazily) -->
+    <script>
+        // ====== State ======
+        const scenes = {
+            start: document.getElementById('scene-start'),
+            cake: document.getElementById('scene-cake'),
+            video: document.getElementById('scene-video'),
+            final: document.getElementById('scene-final'),
+        };
+
+        const btnStart = document.getElementById('btn-start');
+        const btnPlay = document.getElementById('btn-play');
+        const btnReplay = document.getElementById('btn-replay');
+        const btnNext = document.getElementById('btn-next');
+        const micToggle = document.getElementById('micToggle');
+
+        const countNum = document.getElementById('countNum');
+        const ringProgress = document.getElementById('ring-progress');
+        const countHelp = document.getElementById('countHelp');
+
+        const videoEl = document.getElementById('vid');
+
+        const HAPTIC_TICK = 20;
+        const HAPTIC_SLUKK = 80;
+
+        let confettiFn = null; // will be set after lazy load
+        let micOn = false;
+        let count = 5;
+        let candlesLit = Array(28).fill(true);
+
+        function vibrate(d) { try { navigator.vibrate && navigator.vibrate(d); } catch (_) { } }
+
+        // ====== Utils ======
+        function show(scene) {
+            Object.values(scenes).forEach(s => s.classList.remove('active'));
+            scenes[scene].classList.add('active');
+        }
+
+        function lazyLoadConfetti() {
+            if (confettiFn) return;
+            const s = document.createElement('script');
+            s.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js";
+            s.async = true;
+            s.onload = () => { confettiFn = window.confetti; };
+            document.head.appendChild(s);
+        }
+
+        function fireConfetti() {
+            if (!confettiFn) return;
+            const count = 220;
+            const shoot = (p, scalar) => confettiFn({ particleCount: Math.floor(count * p), spread: 60, startVelocity: 45, scalar, origin: { y: .6 } });
+            shoot(.25, .9); shoot(.2, 1); shoot(.35, .92);
+        }
+
+        // ====== Candles rendering ======
+        const candlesLayer = document.getElementById('candles');
+        function renderCandles() {
+            candlesLayer.innerHTML = '';
+            // distribute along ellipse
+            const N = 28, rx = 130, ry = 18;
+            for (let i = 0; i < N; i++) {
+                const t = (i / (N - 1)) * Math.PI;
+                const x = Math.cos(t) * rx;
+                const y = -Math.sin(t) * ry;
+                const holder = document.createElement('div');
+                holder.className = 'candle-holder';
+                holder.style.left = `calc(50% + ${x}px)`;
+                holder.style.top = `calc(50% + ${y}px)`;
+
+                const c = document.createElement('div');
+                c.className = 'candle';
+                c.innerHTML = `
+          <div class="wick"></div>
+          ${candlesLit[i] ? '<div class="flame" style="animation-delay:' + ((i % 7) * 0.1) + 's"></div>' : '<div class="smoke"></div>'}
+          <div style="width:6px; height:32px; background:#fff; border-radius:3px; box-shadow:inset 0 0 4px rgba(0,0,0,.2);"></div>
+        `;
+                holder.appendChild(c);
+                candlesLayer.appendChild(holder);
+            }
+        }
+
+        // ====== Microphone "blow" detector ======
+        let audioCtx = null, analyser = null, data = null, mediaCleanup = null, rafId = 0;
+        let aboveSince = null;
+        const RMS_THRESHOLD = 0.12;   // tweak
+        const HOLD_MS = 350;    // sustain
+
+        async function startMic() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioCtx.createMediaStreamSource(stream);
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 1024;
+                data = new Uint8Array(analyser.fftSize);
+                source.connect(analyser);
+                mediaCleanup = () => { stream.getTracks().forEach(t => t.stop()); try { source.disconnect(); } catch (_) { } try { analyser.disconnect(); } catch (_) { } audioCtx && audioCtx.close(); };
+                loopMic();
+            } catch (err) {
+                // Permission denied or no mic: silently continue (toggle stays on visually, but no effect)
+                console.warn('Mic error', err);
+            }
+        }
+        function stopMic() {
+            if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+            mediaCleanup && mediaCleanup();
+            audioCtx = analyser = data = mediaCleanup = null;
+            aboveSince = null;
+        }
+        function loopMic() {
+            if (!analyser || !data) return;
+            analyser.getByteTimeDomainData(data);
+            let sum = 0;
+            for (let i = 0; i < data.length; i++) {
+                const v = (data[i] - 128) / 128; sum += v * v;
+            }
+            const rms = Math.sqrt(sum / data.length);
+            const now = performance.now();
+            if (rms >= RMS_THRESHOLD) {
+                if (aboveSince == null) aboveSince = now;
+                if (now - aboveSince >= HOLD_MS) {
+                    // trigger blow
+                    if (sceneIs('cake') && candlesLit.some(Boolean)) {
+                        blowAll();
+                    }
+                }
+            } else {
+                aboveSince = null;
+            }
+            rafId = requestAnimationFrame(loopMic);
+        }
+
+        function sceneIs(name) { return scenes[name].classList.contains('active'); }
+
+        // ====== Countdown ======
+        const CIRC = 2 * Math.PI * 64; // r=64
+        ringProgress.setAttribute('stroke-dasharray', `${CIRC} ${CIRC}`);
+        function updateRing() {
+            const prog = (1 - (count / 5)) * CIRC;
+            ringProgress.setAttribute('stroke-dashoffset', String(prog));
+            countNum.textContent = String(count);
+        }
+
+        function resetCake() {
+            candlesLit = Array(28).fill(true);
+            count = 5;
+            updateRing();
+            countHelp.textContent = micOn ? "Du kan blåse i mikrofonen eller vente på 0." : "Nedtellingen slukker lysene automatisk.";
+            renderCandles();
+        }
+
+        function tick() {
+            if (!sceneIs('cake')) return;
+            if (!candlesLit.some(Boolean)) return;
+            if (count <= 0) { blowAll(); return; }
+            setTimeout(() => { count = Math.max(0, count - 1); updateRing(); vibrate(HAPTIC_TICK); tick(); }, 1000);
+        }
+
+        function blowAll() {
+            candlesLit = candlesLit.map(() => false);
+            renderCandles();
+            vibrate(HAPTIC_SLUKK);
+            lazyLoadConfetti();
+            setTimeout(() => fireConfetti(), 50);
+            setTimeout(() => showScene('video'), 1400);
+        }
+
+        // ====== Scene switching ======
+        function showScene(name) {
+            show(name);
+            if (name === 'cake') { resetCake(); tick(); }
+        }
+
+        // ====== Events ======
+        btnStart.addEventListener('click', () => showScene('cake'));
+
+        micToggle.addEventListener('click', async () => {
+            micOn = !micOn;
+            micToggle.dataset.on = String(micOn);
+            micToggle.setAttribute('aria-checked', String(micOn));
+            countHelp.textContent = micOn ? "Du kan blåse i mikrofonen eller vente på 0." : "Nedtellingen slukker lysene automatisk.";
+            if (micOn) startMic(); else stopMic();
+        });
+        micToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') micToggle.click();
+        });
+
+        btnPlay.addEventListener('click', () => videoEl.play());
+        btnReplay.addEventListener('click', () => { videoEl.currentTime = 0; videoEl.play(); });
+        btnNext.addEventListener('click', () => showScene('final'));
+        videoEl.addEventListener('ended', () => showScene('final'));
+
+        // ====== Init ======
+        renderCandles();
+    </script>
+</body>
+
+</html>
